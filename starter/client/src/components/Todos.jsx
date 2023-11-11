@@ -77,8 +77,8 @@ export function Todos() {
   async function onTodoDelete(todoId) {
     try {
       const accessToken = await getAccessTokenSilently({
-        audience: `https://test-endpoint.auth0.com/api/v2/`,
-        scope: 'delete:todo'
+        audience: `https://dev-o4o54v6cg86dv4pk.us.auth0.com/api/v2/`,
+        scope: 'delete:todos'
       })
       await deleteTodo(accessToken, todoId)
       setTodos(todos.filter((todo) => todo.todoId !== todoId))
@@ -91,8 +91,8 @@ export function Todos() {
     try {
       const todo = todos[pos]
       const accessToken = await getAccessTokenSilently({
-        audience: `https://test-endpoint.auth0.com/api/v2/`,
-        scope: 'write:todo'
+        audience: `https://dev-o4o54v6cg86dv4pk.us.auth0.com/api/v2/`,
+        scope: 'write:todos'
       })
       await patchTodo(accessToken, todo.todoId, {
         name: todo.name,
@@ -127,13 +127,14 @@ export function Todos() {
   useEffect(() => {
     async function foo() {
       try {
-        const accessToken = await getAccessTokenSilently({
-          audience: `https://test-endpoint.auth0.com/api/v2/`,
+        var accessToken = await getAccessTokenSilently({
+          audience: `https://dev-o4o54v6cg86dv4pk.us.auth0.com/api/v2/`,
           scope: 'read:todos'
         })
         console.log('Access token: ' + accessToken)
-        const todos = await getTodos(accessToken)
-        setTodos(todos)
+        var items = await getTodos(accessToken)
+        console.log('items: ', items)
+        setTodos(items)
         setLoadingTodos(false)
       } catch (e) {
         alert(`Failed to fetch todos: ${e.message}`)
